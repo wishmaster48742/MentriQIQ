@@ -18,12 +18,18 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/mentriqiq'
 let mongoConnectionPromise = null;
 
 const connectDB = async () => {
+  if (process.env.VERCEL && !process.env.MONGO_URI) {
+    throw new Error('MONGO_URI is not configured');
+  }
+
   if (mongoose.connection.readyState === 1) {
     return mongoose.connection;
   }
 
   if (!mongoConnectionPromise) {
-    mongoConnectionPromise = mongoose.connect(MONGO_URI)
+    mongoConnectionPromise = mongoose.connect(MONGO_URI, {
+      serverSelectionTimeoutMS: 5000
+    })
       .then((connection) => {
         console.log('MongoDB connected');
         return connection;
