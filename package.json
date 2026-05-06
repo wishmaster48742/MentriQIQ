@@ -2,11 +2,21 @@
   "name": "mentriqiq",
   "version": "1.0.0",
   "description": "A full-stack MCQ test platform inspired by Upwork-style assessments.",
+  "private": true,
   "license": "ISC",
   "author": "",
   "type": "commonjs",
-  "main": "index.js",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm --workspace frontend run build",
+    "start": "npm --workspace backend start",
+    "seed": "npm --workspace backend run seed",
+    "test": "echo \"No root test suite configured\""
   }
 }
